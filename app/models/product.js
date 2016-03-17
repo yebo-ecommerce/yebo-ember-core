@@ -5,7 +5,6 @@ import _toArray from 'lodash/lang/toArray';
 // import _findLastKey from 'lodash/object/findLastKey';
 
 export default DS.Model.extend({
-
   // Attributes
   name: DS.attr('string'),
   description: DS.attr('string'),
@@ -24,7 +23,7 @@ export default DS.Model.extend({
   // Installments Attributes
   hasInstallments: DS.attr("boolean"),
   installments: DS.attr(),
-  hasDiscount: DS.attr('boolean'),
+  hasDiscounts: DS.attr('boolean'),
   discounts: DS.attr(),
 
   // Relationships

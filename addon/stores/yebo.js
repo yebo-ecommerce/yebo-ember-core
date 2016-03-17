@@ -87,7 +87,10 @@ export default DS.Store.extend({
     var adapter = this.adapterFor(model);
     var serializer = this.serializerFor(type);
 
-    var promise = adapter.findRecord(store, model, slug, null);
+    // Snapshot was previously null, now i pass this
+    // i don't know why, but it works
+    let snapshot = { include: false }
+    var promise = adapter.findRecord(store, model, slug, snapshot);
 
     return promise.then(
       function(adapterPayload) {
