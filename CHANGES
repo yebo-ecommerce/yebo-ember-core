@@ -1,3 +1,7 @@
+Version 0.3.1:
+ - save
+ - fix weird bug
+
 Version 0.3.0:
  - Merge tag '0.2.9' into develop
  - Merge branch 'release/0.2.9'
