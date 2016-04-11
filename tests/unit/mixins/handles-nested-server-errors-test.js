@@ -49,7 +49,7 @@ test('it handles yebo errors', function(assert) {
     
     order.adapterDidInvalidate({
       "base": ["could not save shipping address"],
-      "ship_address.firstname": ["can't be blank"],
+      "ship_address.firstName": ["can't be blank"],
       "payments.Credit Card": ["month can't be blank", "Verification Value is invalid"]
     });
     
@@ -58,7 +58,7 @@ test('it handles yebo errors', function(assert) {
     assert.equal(order.get('errors.firstObject').message, 'could not save shipping address');
     
     assert.equal(order.get('shipAddress.errors.length'), 1);
-    assert.equal(order.get('shipAddress.errors.firstObject').attribute, 'firstname');
+    assert.equal(order.get('shipAddress.errors.firstObject').attribute, 'firstName');
     assert.equal(order.get('shipAddress.errors.firstObject').message, "can't be blank");
 
     assert.equal(order.get('activePayment.source.errors.length'), 2);
