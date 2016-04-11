@@ -7,15 +7,15 @@ import { ActiveModelSerializer } from 'active-model-adapter';
 
   ```javascript
   var model = DS.Model.extend({
-    firstname: DS.attr("string", { persistToServer: true }),
-    lastname: DS.attr("string")
+    firstName: DS.attr("string", { persistToServer: true }),
+    lastName: DS.attr("string")
   });
 
   var hugh = model.create();
 
   hugh.setProperties({
-    firstname: "Hugh",
-    lastname: "Francis"
+    firstName: "Hugh",
+    lastName: "Francis"
   });
 
   yeboSerializer.serialize(hugh);

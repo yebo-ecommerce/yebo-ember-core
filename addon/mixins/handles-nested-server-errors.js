@@ -6,7 +6,7 @@ import Ember from 'ember';
 
   ```js
   errors: {
-    ship_address.firstname: ["can't be blank"]
+    ship_address.firstName: ["can't be blank"]
     ship_address.country: ["can't be blank"]
   }
   ```
