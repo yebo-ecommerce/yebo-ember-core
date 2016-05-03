@@ -1,3 +1,7 @@
+Version 0.3.2:
+ - Merge branch 'feature/extra-fields' into develop
+ - bumpversion
+
 Version 0.3.1:
  - save
  - fix weird bug
