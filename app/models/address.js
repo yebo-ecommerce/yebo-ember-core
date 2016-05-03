@@ -32,10 +32,8 @@ export default DS.Model.extend({
   cpf:                  DS.attr('string', { persistToServer: true }),
   rg:                   DS.attr('string', { persistToServer: true }),
   sex:                  DS.attr('string', { persistToServer: true }),
-  birthDate:            DS.attr('string', { persistToServer: true }, function() {
-    debugger;
-  }),
-  pj:                   DS.attr('string', { persistToServer: true }),
+  birthDate:            DS.attr('birthDate', { persistToServer: true }),
+  pj:                   DS.attr('boolean', { persistToServer: true }),
   cnpj:                 DS.attr('string', { persistToServer: true }),
   fictitiousName:       DS.attr('string', { persistToServer: true }),
   im:                   DS.attr('string', { persistToServer: true }),
