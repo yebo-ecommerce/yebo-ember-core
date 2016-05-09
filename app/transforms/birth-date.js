@@ -14,7 +14,7 @@ export default DS.Transform.extend({
     let dt = new Date(serialized);
 
     let year = dt.getFullYear();
-    let month = (dt.getMonth() + 1);
+    let month = pad(dt.getMonth() + 1);
     let day = pad(dt.getDate());
 
     return [day, month, year].join('/');

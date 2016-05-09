@@ -17,6 +17,9 @@ export default DS.Model.extend({
   children: DS.hasMany('taxon'),
 
   childrenExcMaster: Ember.computed('children', function() {
-    return this.get('children').findBy('parentId', undefined);
+    this.get("children").filter(t => {
+      let parentId = t.get('parentId');
+      return parentId != null || parentId != undefined;
+    })
   }),
 });
