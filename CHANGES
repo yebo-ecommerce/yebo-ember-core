@@ -1,3 +1,7 @@
+Version 0.3.3:
+ - pad month
+ - birth date
+
 Version 0.3.2:
  - Merge branch 'feature/extra-fields' into develop
  - bumpversion
