@@ -92,13 +92,17 @@ export default ActiveModelAdapter.extend(DataAdapterMixin, {
     @default {}
   */
   headers: Ember.computed('yebo.currentOrder', function() {
-    let order = this.get('yebo.currentOrder');
+    try {
+      // This is not ugly, this is hideous
+      let token = this.get('session').get('session').get('authenticated').user.token;
 
-    if (order) {
       return {
-        "X-Yebo-Order-Token": order.get('guestToken'),
-        "X-Yebo-Order": order.get('number'),
+        "X-Yebo-Token": token,
+        "X-Yebo-Guest-Token": this.get('yebo.guestToken'),
+        "X-Yebo-Order": this.get('yebo.orderId'),
       };
+    } catch (e) {
+      console.log("log: ", e);
     }
   }),
 
