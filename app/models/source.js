@@ -8,6 +8,7 @@ export default DS.Model.extend({
   name:              DS.attr('string', { persistToServer: true }),
   ccType:            DS.attr('string'),
   lastDigits:        DS.attr('string'),
+  url:               DS.attr('string'),
 
   // Relationships
   paymentMethod: DS.belongsTo('paymentMethod')
