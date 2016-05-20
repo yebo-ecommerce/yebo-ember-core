@@ -44,7 +44,12 @@ export default DS.Model.extend({
   }),
 
   master: Ember.computed('variantsIncludingMaster', function() {
-    return this.get('variantsIncludingMaster').findBy('isMaster');
+    let variant = this.get('variantsIncludingMaster').findBy('isMaster');
+
+    if (Ember.isBlank(variant)) {
+      variant = this.get('variantsIncludingMaster.firstObject')
+    }
+    return variant
   }),
 
   image: Ember.computed('images', function() {
