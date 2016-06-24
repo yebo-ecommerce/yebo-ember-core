@@ -102,7 +102,7 @@ export default ActiveModelAdapter.extend(DataAdapterMixin, {
         "X-Yebo-Order": this.get('yebo.orderId'),
       };
     } catch (e) {
-      console.log("log: ", e);
+      // console.log("log: ", e);
     }
   }),
 
