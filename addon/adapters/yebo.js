@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import ActiveModelAdapter from 'active-model-adapter';
 import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
+import DS from 'ember-data';
 
 /**
   The Yebo Adapter is responsible for communicating with your Yebo store.  It
@@ -9,19 +10,25 @@ import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
   @class Yebo
   @namespace Adapter
   @extends ActiveModelAdapter
-*/
+  */
+
+
 export default ActiveModelAdapter.extend(DataAdapterMixin, {
   // TODO: Remove this dependecy, make it injectable in the proper package
   authorizer: 'ember-simple-auth-authorizer:jwt',
 
+  init(){
+    this._super.init && this._super.init.apply(this, arguments)
+    this.ajaxOptions = DS.RESTAdapter.prototype.ajaxOptions
+  },
 
   /*
-    By default the RESTAdapter will send each find request coming from a
-    store.find or from accessing a relationship separately to the server.
-    If your server supports passing ids as a query string,
-    you can set coalesceFindRequests to true to coalesce all find requests within
-    a single runloop.
-  */
+   By default the RESTAdapter will send each find request coming from a
+   store.find or from accessing a relationship separately to the server.
+   If your server supports passing ids as a query string,
+   you can set coalesceFindRequests to true to coalesce all find requests within
+   a single runloop.
+   */
   // coalesceFindRequests: true
 
   /**
@@ -31,7 +38,7 @@ export default ActiveModelAdapter.extend(DataAdapterMixin, {
     @type String
     @readOnly
     @default '-yebo'
-  */
+    */
   defaultSerializer: '-yebo',
   /**
     A refernce to the Yebo Service.
@@ -39,7 +46,7 @@ export default ActiveModelAdapter.extend(DataAdapterMixin, {
     @property yebo
     @type Subclass of Ember.Service
     @readOnly
-  */
+    */
   yebo: Ember.inject.service("yebo"),
   /**
     A computed property for the server namespace.  If it's not set in the Host
@@ -50,7 +57,7 @@ export default ActiveModelAdapter.extend(DataAdapterMixin, {
     @type String
     @readOnly
     @default 'api/ams'
-  */
+    */
   namespace: Ember.computed('yebo.config.apiNamespace', function() {
     var namespace = this.get('yebo.config.namespace');
     return namespace || 'api/v2';
@@ -65,7 +72,7 @@ export default ActiveModelAdapter.extend(DataAdapterMixin, {
     @type String
     @readOnly
     @default 'http://localhost:3000'
-  */
+    */
   host: Ember.computed('yebo.config.apiHost', function() {
     var host = this.get('yebo.config.apiHost');
     if (host) {
@@ -90,7 +97,7 @@ export default ActiveModelAdapter.extend(DataAdapterMixin, {
     @type String
     @readOnly
     @default {}
-  */
+    */
   headers: Ember.computed('yebo.currentOrder', function() {
     try {
       // This is not ugly, this is hideous
@@ -115,7 +122,7 @@ export default ActiveModelAdapter.extend(DataAdapterMixin, {
     normally.
 
     @method buildURL
-  */
+    */
   buildURL: function(record, suffix, snapshot, requestType) {
     if (record === "order" && snapshot && snapshot.attr('_useCheckoutsEndpoint')) {
       record = "checkout";
