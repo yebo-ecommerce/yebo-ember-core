@@ -18,7 +18,7 @@ export default DS.Model.extend({
 
   childrenExcMaster: Ember.computed('children', function() {
     return this.get("children").filter(t => {
-      let parentId = t.get('parentId');
+      const parentId = t.get('parentId');
       return parentId != null || parentId != undefined;
     })
   }),

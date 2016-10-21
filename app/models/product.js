@@ -53,8 +53,7 @@ export default DS.Model.extend({
   }),
 
   image: Ember.computed('images', function() {
-    let imgs = this.get('images');
-    return imgs.findBy('position', 1) || imgs.findBy('position', 0);
+    return this.get('images.firstObject')
   }),
 
   taxon: Ember.computed(function() {
@@ -107,6 +106,28 @@ export default DS.Model.extend({
     });
 
     return filters;
-  })
+  }),
+  
+  quantity: 1,
+  priceTotal: Ember.computed('price', 'quantity', function(){
+    const rawPrice = this.get('price').replace('R$','').replace(',','.')
+      const price = this.get('quantity') * rawPrice
+      return 'R$' + parseFloat(price, 10).toFixed(2).toString().replace('.',',')
+  }),
+  plusOne() {
+    const qtd = this.get('quantity')
+      this.set('quantity', qtd + 1)
+  },
+  minusOne() {
+    const qtd = this.get('quantity')
+      if(qtd <= 1) { return }
+    this.set('quantity', qtd - 1)
+  },
+  qtdButton: Ember.computed('quantity', function(){
+    if(this.get('quantity') > 1){
+      return '+' + this.get('quantity')
+    }
+    return ''
+  }),
 
 });
