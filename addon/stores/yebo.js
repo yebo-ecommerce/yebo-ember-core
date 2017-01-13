@@ -37,18 +37,25 @@ export default DS.Store.extend({
   defaultSerializer: '-yebo',
 
   /**
-    Find a model by it's `slug` attribute.
+  assets/ember-data/-private/system/store.js
+  serializerFor(modelName) {
+    debugger
+  },
+  */
 
-    @example
-    ```javascript
-  // Products Show Route
-  import Ember from 'ember';
+  /**
+  Find a model by it's `slug` attribute.
 
-  export default Ember.Route.extend({
-  model: function(params) {
-  return this.yebo.store.findBySlug('product', params.slug);
-  }
-  });
+  @example
+
+  ```javascript
+    // Products Show Route
+    import Ember from 'ember';
+    export default Ember.Route.extend({
+      model: function(params) {
+        return this.yebo.store.findBySlug('product', params.slug);
+      }
+    });
   ```
 
   @method findBySlug
@@ -56,6 +63,7 @@ export default DS.Store.extend({
   @param {String} slug The model's slug
   @return {YeboEmber.Adapter} The Yebo Ember Adapater.
   */
+
   findBySlug(type, slug) {
     Ember.assert("You need to pass a type to the store's findBySlug method", arguments.length >= 1);
     Ember.assert("You need to pass a slug to the store's findBySlug method", arguments.length >= 2);
