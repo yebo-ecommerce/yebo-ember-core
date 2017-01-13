@@ -14,7 +14,7 @@ const { getOwner } = Ember;
   @module yebo-ember-core/stores/yebo
   @uses YeboEmber.Adapter, YeboEmber.Serializer, Ember.Evented
   @extends DS.Store
-*/
+  */
 export default DS.Store.extend({
   /**
     The container lookup name for the Yebo adapter.
@@ -23,7 +23,7 @@ export default DS.Store.extend({
     @type String
     @readOnly
     @default '-yebo'
-  */
+    */
   adapter: '-yebo',
 
   /**
@@ -33,74 +33,49 @@ export default DS.Store.extend({
     @type String
     @readOnly
     @default '-yebo'
-  */
+    */
   defaultSerializer: '-yebo',
-
-  /**
-    Always returns the Yebo Adapter.
-
-    @method adapterFor
-    @return {YeboEmber.Adapter} The Yebo Ember Adapater.
-  */
-  adapterFor: function() {
-    return getOwner(this).lookup('adapter:-yebo');
-  },
-
-  /**
-    Attempts to find a registered serializer for the type, but in the case it doesn't
-    find one, it will return the default Yebo serializer.
-
-    @method serializerFor
-    @return {Serializer} A serializer.
-  */
-  serializerFor: function(modelName) {
-    var fallbacks = ['application', this.adapterFor(modelName).get('defaultSerializer'), '-default'];
-    return this.lookupSerializer(modelName, fallbacks);
-  },
 
   /**
     Find a model by it's `slug` attribute.
 
     @example
     ```javascript
-    // Products Show Route
-    import Ember from 'ember';
+  // Products Show Route
+  import Ember from 'ember';
 
-    export default Ember.Route.extend({
-      model: function(params) {
-        return this.yebo.store.findBySlug('product', params.slug);
-      }
-    });
-    ```
+  export default Ember.Route.extend({
+  model: function(params) {
+  return this.yebo.store.findBySlug('product', params.slug);
+  }
+  });
+  ```
 
-    @method findBySlug
-    @param {String} type A model type
-    @param {String} slug The model's slug
-    @return {YeboEmber.Adapter} The Yebo Ember Adapater.
+  @method findBySlug
+  @param {String} type A model type
+  @param {String} slug The model's slug
+  @return {YeboEmber.Adapter} The Yebo Ember Adapater.
   */
-  findBySlug: function(type, slug) {
+  findBySlug(type, slug) {
     Ember.assert("You need to pass a type to the store's findBySlug method", arguments.length >= 1);
     Ember.assert("You need to pass a slug to the store's findBySlug method", arguments.length >= 2);
 
-    var store = this;
-    var model = this.modelFor(type);
-    var adapter = this.adapterFor(model);
-    var serializer = this.serializerFor(type);
+    const store = this;
+    const model = this.modelFor(type);
+    const adapter = this.adapterFor(model);
+    const serializer = this.serializerFor(type);
 
     // Snapshot was previously null, now i pass this
     // i don't know why, but it works
-    let snapshot = { include: false }
-    var promise = adapter.findRecord(store, model, slug, snapshot);
+    const snapshot = { include: false }
+    const promise = adapter.findRecord(store, model, slug, snapshot);
 
     return promise.then(
-      function(adapterPayload) {
-        var model = store.modelFor(type);
-        var payload = serializer.normalizeResponse(store, model, adapterPayload, slug, 'findRecord');
+      adapterPayload => {
+        const model = store.modelFor(type);
+        const payload = serializer.normalizeResponse(store, model, adapterPayload, slug, 'findRecord');
         return store.push(payload);
-      },
-      function(error) {
-        throw Error(error);
-      }
+      }, error => { throw Error(error) }
     );
   }
 });
