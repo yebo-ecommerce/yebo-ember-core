@@ -37,25 +37,25 @@ export default DS.Store.extend({
   defaultSerializer: '-yebo',
 
   /**
-  assets/ember-data/-private/system/store.js
-  serializerFor(modelName) {
+    assets/ember-data/-private/system/store.js
+    serializerFor(modelName) {
     debugger
-  },
-  */
+    },
+    */
 
   /**
-  Find a model by it's `slug` attribute.
+    Find a model by it's `slug` attribute.
 
-  @example
+    @example
 
-  ```javascript
-    // Products Show Route
-    import Ember from 'ember';
-    export default Ember.Route.extend({
-      model: function(params) {
-        return this.yebo.store.findBySlug('product', params.slug);
-      }
-    });
+    ```javascript
+  // Products Show Route
+  import Ember from 'ember';
+  export default Ember.Route.extend({
+  model: function(params) {
+  return this.yebo.store.findBySlug('product', params.slug);
+  }
+  });
   ```
 
   @method findBySlug
@@ -68,22 +68,11 @@ export default DS.Store.extend({
     Ember.assert("You need to pass a type to the store's findBySlug method", arguments.length >= 1);
     Ember.assert("You need to pass a slug to the store's findBySlug method", arguments.length >= 2);
 
-    const store = this;
-    const model = this.modelFor(type);
     const adapter = this.adapterFor(model);
-    const serializer = this.serializerFor(type);
 
     // Snapshot was previously null, now i pass this
     // i don't know why, but it works
-    const snapshot = { include: false }
-    const promise = adapter.findRecord(store, model, slug, snapshot);
+    return adapter.find(type, slug);
 
-    return promise.then(
-      adapterPayload => {
-        const model = store.modelFor(type);
-        const payload = serializer.normalizeResponse(store, model, adapterPayload, slug, 'findRecord');
-        return store.push(payload);
-      }, error => { throw Error(error) }
-    );
   }
 });
